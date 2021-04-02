@@ -24,5 +24,5 @@ public interface CommandHandler {
      * @param command - basically it is application's argument unified by it's meaning. For example: `-f ./script/intro.md`
      *                is one command.
      */
-    void handle(String[] command);
+    void handle(String[] command) throws Exception;
 }

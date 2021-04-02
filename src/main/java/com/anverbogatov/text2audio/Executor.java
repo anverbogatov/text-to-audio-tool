@@ -3,6 +3,7 @@ package com.anverbogatov.text2audio;
 import com.anverbogatov.text2audio.commands.CommandHandler;
 import com.anverbogatov.text2audio.commands.CommandHandlerProvider;
 import com.anverbogatov.text2audio.commands.impl.HelpCommandHandler;
+import com.anverbogatov.text2audio.commands.impl.Text2AudioCommandHandler;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,6 +21,7 @@ public class Executor {
     static {
         COMMAND_HANDLERS = new HashSet<>(2);
         COMMAND_HANDLERS.add(new HelpCommandHandler());
+        COMMAND_HANDLERS.add(new Text2AudioCommandHandler());
     }
 
     public static void main(String[] args) {
@@ -31,7 +33,7 @@ public class Executor {
             var handler = new CommandHandlerProvider(COMMAND_HANDLERS).get(args);
 
             // Step 3 - Do stuff
-            handler.orElseThrow(() -> new IllegalStateException("Application can not handled given command.")).handle(args);
+            handler.orElseThrow(() -> new IllegalStateException("Application could not handle given command.")).handle(args);
         } catch (Exception e) {
             System.err.printf("🚨 %s 🚨\n", e.getMessage());
         }
