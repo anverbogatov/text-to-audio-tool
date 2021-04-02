@@ -18,6 +18,7 @@ public class HelpCommandHandler implements CommandHandler {
                 "must follow rules described in: https://github.com/anverbogatov/text-to-audio-tool/blob/main/README.md");
         System.out.println();
         System.out.println("⚠️ List of supported arguments");
-        System.out.println("\t\t-f\t[path to file]\t\tSpecifies input text file. Example: `-f ./input/script.md`");
+        System.out.println("\t\t-f\t[path to file]\t\tSpecifies input text file. Only files with `*.txt` and `*.md` " +
+                "extensions are supported. Example: `-f ./input/script.md`");
     }
 }
