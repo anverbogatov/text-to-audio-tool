@@ -33,3 +33,10 @@ where
 * `temp.txt` - is file with written text for which we want to have an audio
 
 As the result `result.aiff` audio file will be generated and saved near your textual file.
+
+### 📘 Where the tool can be useful?
+Basically, it is up to you, my friend! 🤝
+
+But me personally found that tool useful for video edit and production. When I need to do a voice over and I do not want to record myself or somebody else, I can use that tool for that.
+Here is example of video I produced with the tool:
+https://www.youtube.com/watch?v=P8rkvDco8ac
