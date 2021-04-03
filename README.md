@@ -30,9 +30,47 @@ Use following command to transform text file to an audio file:
 java -jar text-to-audio-tool-0.1-SNAPSHOT.jar -f /Users/anverbogatov/Desktop/temp/text.txt
 ```
 where
-* `temp.txt` - is file with written text for which we want to have an audio
+* `temp.txt` - is a file with written text for which we want to have an audio
 
-As the result `result.aiff` audio file will be generated and saved near your textual file.
+As the result `*.aiff` audio files will be generated and saved near your textual file.
+
+### 🚧 How to write right textual file?
+The tool support generation of multiple audio files out from `*.txt` & `*.md` files that have required file structure.
+
+Use `### ` symbols to define new text block in your file. Add some text right after these symbols to name that text block. 
+That information will be used later during an audio files generation.
+
+Then, start new line and write down your script that must be pronounced by machine voice.
+
+That is it.
+
+So, your file must follow following structure:
+```
+### [name of text block]
+[text to audio]
+
+### [name of another text block]
+[text to audio]
+```
+
+And here is example:
+```
+### Introduction
+Hello dear comrades! Let's talk about Soviet Russia today.
+
+### What is Soviet Russia?
+Soviet Russia is the greatest country in the World.
+
+### Outro
+Let the Great Bear be with you my dear comrade!
+```
+
+As the result of the tool work you will have following files in the same folder where your textual file is located:
+```
+0-introduction.aiff
+1-what-is-soviet-russia?.aiff
+2-outro.aiff
+```
 
 ### 📘 Where the tool can be useful?
 Basically, it is up to you, my friend! 🤝
