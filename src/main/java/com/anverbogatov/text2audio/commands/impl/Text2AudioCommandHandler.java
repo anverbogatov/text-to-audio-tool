@@ -1,12 +1,10 @@
 package com.anverbogatov.text2audio.commands.impl;
 
 import com.anverbogatov.text2audio.commands.CommandHandler;
+import com.anverbogatov.text2audio.files.FileParser;
 import lombok.RequiredArgsConstructor;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.ByteBuffer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -14,12 +12,10 @@ import java.util.Locale;
 
 import static java.lang.String.format;
 
+@RequiredArgsConstructor
 public class Text2AudioCommandHandler implements CommandHandler {
 
-    /**
-     * Max size of buffer which is used for reading data from files.
-     */
-    private static final int MAX_BUFFER_SIZE = 1024;
+    private final FileParser fileParser;
 
     @Override
     public boolean isSupported(String[] command) {
@@ -33,9 +29,17 @@ public class Text2AudioCommandHandler implements CommandHandler {
 
         validateInput(path);
 
-        var content = getFileContent(path);
+        var audibleParts = fileParser.parse(path);
 
-        Runtime.getRuntime().exec(format("say -o %s/%s '%s'", path.getParent().toAbsolutePath().toString(), "result.aiff", content));
+        for (int i = 0; i < audibleParts.size(); i++) {
+            var part = audibleParts.get(i);
+            var sectionName = part.getPartName() != null && !part.getPartName().trim().isEmpty() ?
+                    String.format("%d-%s", i, part.getPartName()) :
+                    "result";
+            var fileName = format("%s.aiff", sectionName).toLowerCase(Locale.ROOT).replaceAll(" ", "-");
+
+            Runtime.getRuntime().exec(format("say -o %s/%s '%s'", path.getParent().toAbsolutePath().toString(), fileName, part.getPartContent()));
+        }
     }
 
     private void validateInput(Path path) {
@@ -47,23 +51,6 @@ public class Text2AudioCommandHandler implements CommandHandler {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(
                         format("File `%s` is not supported. Check `-help` for the list of supported files.", file.getName())));
-    }
-
-    private String getFileContent(Path path) throws IOException {
-        try (var reader = new RandomAccessFile(path.toFile(), "r")) {
-            var channel = reader.getChannel();
-            var byteOut = new ByteArrayOutputStream();
-
-            var bufferSize = channel.size() < MAX_BUFFER_SIZE ? (int) channel.size() : MAX_BUFFER_SIZE;
-            var buffer = ByteBuffer.allocate(bufferSize);
-
-            while (channel.read(buffer) > 0) {
-                byteOut.write(buffer.array(), 0, buffer.position());
-                buffer.clear();
-            }
-
-            return byteOut.toString();
-        }
     }
 
     @RequiredArgsConstructor
