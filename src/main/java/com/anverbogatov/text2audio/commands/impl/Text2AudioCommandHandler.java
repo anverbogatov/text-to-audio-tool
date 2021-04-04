@@ -2,6 +2,7 @@ package com.anverbogatov.text2audio.commands.impl;
 
 import com.anverbogatov.text2audio.commands.CommandHandler;
 import com.anverbogatov.text2audio.files.FileParser;
+import com.anverbogatov.text2audio.generator.AudioFileGenerator;
 import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
@@ -14,6 +15,8 @@ import static java.lang.String.format;
 
 @RequiredArgsConstructor
 public class Text2AudioCommandHandler implements CommandHandler {
+
+    private final AudioFileGenerator audioGenerator;
 
     private final FileParser fileParser;
 
@@ -38,7 +41,7 @@ public class Text2AudioCommandHandler implements CommandHandler {
                     "result";
             var fileName = format("%s.aiff", sectionName).toLowerCase(Locale.ROOT).replaceAll(" ", "-");
 
-            Runtime.getRuntime().exec(format("say -o %s/%s '%s'", path.getParent().toAbsolutePath().toString(), fileName, part.getPartContent()));
+            audioGenerator.generate(path, part, fileName);
         }
     }
 

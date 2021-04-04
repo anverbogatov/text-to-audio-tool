@@ -5,6 +5,7 @@ import com.anverbogatov.text2audio.commands.CommandHandlerProvider;
 import com.anverbogatov.text2audio.commands.impl.HelpCommandHandler;
 import com.anverbogatov.text2audio.commands.impl.Text2AudioCommandHandler;
 import com.anverbogatov.text2audio.files.impl.TxtAndMarkdownFileParserImpl;
+import com.anverbogatov.text2audio.generator.impl.AiffAudioFileGenerator;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,7 +23,7 @@ public class Executor {
     static {
         COMMAND_HANDLERS = new HashSet<>(2);
         COMMAND_HANDLERS.add(new HelpCommandHandler());
-        COMMAND_HANDLERS.add(new Text2AudioCommandHandler(new TxtAndMarkdownFileParserImpl()));
+        COMMAND_HANDLERS.add(new Text2AudioCommandHandler(new AiffAudioFileGenerator(), new TxtAndMarkdownFileParserImpl()));
     }
 
     public static void main(String[] args) {
