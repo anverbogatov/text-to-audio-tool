@@ -1,5 +1,3 @@
-# anbo-platform
-
 [![Maven](https://github.com/anverbogatov/text-to-audio-tool/workflows/Java%20CI%20with%20Maven/badge.svg)](https://github.com/anverbogatov/text-to-audio-tool/workflows/Java%20CI%20with%20Maven/badge.svg)
 
 # 🚀 text-to-audio-tool
